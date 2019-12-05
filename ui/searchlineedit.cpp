@@ -17,10 +17,9 @@
 #include <qapplication.h>
 #include <qlayout.h>
 #include <qtimer.h>
+#include <kbusyindicatorwidget.h>
 #include <kcolorscheme.h>
 #include <kiconloader.h>
-#include <kpixmapsequence.h>
-#include <kpixmapsequencewidget.h>
 #include <kmessagebox.h>
 #include <klocalizedstring.h>
 
@@ -286,7 +285,7 @@ SearchLineWidget::SearchLineWidget( QWidget * parent, Okular::Document * documen
     m_edit = new SearchLineEdit( this, document );
     layout->addWidget( m_edit );
 
-    m_anim = new KPixmapSequenceWidget( this );
+    m_anim = new KBusyIndicatorWidget( this );
     m_anim->setFixedSize( 22, 22 );
     layout->addWidget( m_anim );
     m_anim->hide();
@@ -317,15 +316,6 @@ void SearchLineWidget::slotSearchStopped()
 
 void SearchLineWidget::slotTimedout()
 {
-    if ( m_anim->sequence().isEmpty() )
-    {
-        const KPixmapSequence seq = KIconLoader::global()->loadPixmapSequence(QStringLiteral("process-working"), 22);
-        if ( seq.frameCount() > 0 )
-        {
-            m_anim->setInterval( 1000 / seq.frameCount() );
-            m_anim->setSequence( seq );
-        }
-    }
     m_anim->show();
 }
 

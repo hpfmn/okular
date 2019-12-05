@@ -15,8 +15,8 @@
 
 #include <klineedit.h>
 
+class KBusyIndicatorWidget;
 class QTimer;
-class KPixmapSequenceWidget;
 
 /**
  * @short A line edit for find-as-you-type search. Outputs to the Document.
@@ -89,7 +89,7 @@ class SearchLineWidget : public QWidget
 
     private:
         SearchLineEdit *m_edit;
-        KPixmapSequenceWidget* m_anim;
+        KBusyIndicatorWidget* m_anim;
         QTimer *m_timer;
 };
 
