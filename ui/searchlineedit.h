@@ -15,7 +15,12 @@
 
 #include <klineedit.h>
 
+#include <kwidgetsaddons_version.h>
+#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 61, 0)
 class KBusyIndicatorWidget;
+#else
+class KPixmapSequenceWidget;
+#endif
 class QTimer;
 
 /**
@@ -89,7 +94,11 @@ class SearchLineWidget : public QWidget
 
     private:
         SearchLineEdit *m_edit;
+#if KWIDGETSADDONS_VERSION >= QT_VERSION_CHECK(5, 61, 0)
         KBusyIndicatorWidget* m_anim;
+#else
+        KPixmapSequenceWidget* m_anim;
+#endif
         QTimer *m_timer;
 };
 
