@@ -583,8 +583,19 @@ PixmapRequest::PixmapRequest( DocumentObserver *observer, int pageNumber, int wi
 {
     d->mObserver = observer;
     d->mPageNumber = pageNumber;
-    d->mWidth = ceil(width * qApp->devicePixelRatio());
-    d->mHeight = ceil(height * qApp->devicePixelRatio());
+	if (qApp->activeWindow() != NULL) {
+		printf("has window\n");
+		d->mWidth = ceil(width * qApp->activeWindow()->devicePixelRatio());
+		d->mHeight = ceil(height * qApp->activeWindow()->devicePixelRatio());
+		printf("RATIOWindow %d\n", qApp->activeWindow()->devicePixelRatio());
+	}
+	else {
+		printf("has no window\n");
+		d->mWidth = ceil(width);
+		d->mHeight = ceil(height);
+	}
+	printf("pixels %d %d\n", d->mWidth, d->mHeight);
+	printf("RATIO %f\n", qApp->devicePixelRatio());
     d->mPriority = priority;
     d->mFeatures = features;
     d->mForce = false;

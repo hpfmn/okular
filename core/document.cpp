@@ -1635,7 +1635,11 @@ void DocumentPrivate::refreshPixmaps( int pageNumber )
     for ( ; it != itEnd; ++it )
     {
         const QSize size = (*it).m_pixmap->size();
-        PixmapRequest * p = new PixmapRequest( it.key(), pageNumber, size.width() / qApp->devicePixelRatio(), size.height() / qApp->devicePixelRatio(), 1, PixmapRequest::Asynchronous );
+		PixmapRequest * p;
+		if (qApp->activeWindow() != NULL)
+			p = new PixmapRequest( it.key(), pageNumber, size.width() / qApp->activeWindow()->devicePixelRatio(), size.height() / qApp->activeWindow()->devicePixelRatio(), 1, PixmapRequest::Asynchronous );
+		else
+			p = new PixmapRequest( it.key(), pageNumber, size.width() / qApp->devicePixelRatio(), size.height() / qApp->devicePixelRatio(), 1, PixmapRequest::Asynchronous );
         p->d->mForce = true;
         pixmapsToRequest << p;
     }
@@ -1658,7 +1662,11 @@ void DocumentPrivate::refreshPixmaps( int pageNumber )
         {
             tilesManager->markDirty();
 
-            PixmapRequest * p = new PixmapRequest( observer, pageNumber, tilesManager->width() / qApp->devicePixelRatio(), tilesManager->height() / qApp->devicePixelRatio(), 1, PixmapRequest::Asynchronous );
+            PixmapRequest * p;
+			if (qApp->activeWindow() != NULL)
+				p = new PixmapRequest( observer, pageNumber, tilesManager->width() / qApp->activeWindow()->devicePixelRatio(), tilesManager->height() / qApp->activeWindow()->devicePixelRatio(), 1, PixmapRequest::Asynchronous );
+			else
+				p = new PixmapRequest( observer, pageNumber, tilesManager->width() / qApp->devicePixelRatio(), tilesManager->height() / qApp->devicePixelRatio(), 1, PixmapRequest::Asynchronous );
 
             // Get the visible page rect
             NormalizedRect visibleRect;

@@ -18,6 +18,7 @@
 #include <kiconloader.h>
 #include <QDebug>
 #include <QApplication>
+#include <QWidget>
 #include <QIcon>
 #include <QTransform>
 
@@ -111,7 +112,10 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
 
         if (p != NULL) {
             pixmap = *p;
-            pixmap.setDevicePixelRatio( qApp->devicePixelRatio() );
+			if ( qApp->activeWindow() != NULL)
+				pixmap.setDevicePixelRatio( qApp->activeWindow()->devicePixelRatio() );
+			else
+				pixmap.setDevicePixelRatio( qApp->devicePixelRatio() );
         }
 
         /** 1B - IF NO PIXMAP, DRAW EMPTY PAGE **/
@@ -282,7 +286,10 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
                 if ( !limitsInTile.isEmpty() )
                 {
                     QPixmap* tilePixmap = tile.pixmap();
-                    tilePixmap->setDevicePixelRatio( qApp->devicePixelRatio() );
+					if (qApp->activeWindow() != NULL)
+						tilePixmap->setDevicePixelRatio( qApp->activeWindow()->devicePixelRatio() );
+					else
+						tilePixmap->setDevicePixelRatio( qApp->devicePixelRatio() );
 
                     if ( tilePixmap->width() == dTileRect.width() && tilePixmap->height() == dTileRect.height() ) {
                         destPainter->drawPixmap( limitsInTile.topLeft(), *tilePixmap,
@@ -329,7 +336,10 @@ void PagePainter::paintCroppedPageOnPainter( QPainter * destPainter, const Okula
                 if ( !limitsInTile.isEmpty() )
                 {
                     QPixmap* tilePixmap = tile.pixmap();
-                    tilePixmap->setDevicePixelRatio( qApp->devicePixelRatio() );
+					if (qApp->activeWindow() != NULL)
+						tilePixmap->setDevicePixelRatio( qApp->activeWindow()->devicePixelRatio() );
+					else
+						tilePixmap->setDevicePixelRatio( qApp->devicePixelRatio() );
 
                     if ( tilePixmap->width() == dTileRect.width() && tilePixmap->height() == dTileRect.height() )
                     {

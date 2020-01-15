@@ -64,6 +64,8 @@
 #include <math.h>
 #include <stdlib.h>
 
+#include <iostream>
+
 // local includes
 #include "debug_ui.h"
 #include "formwidgets.h"
@@ -4866,6 +4868,7 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
                               verticalScrollBar()->value(),
                               viewport()->width(), viewport()->height() );
     const QRect viewportRectAtZeroZero( 0, 0, viewport()->width(), viewport()->height() );
+	std::cout << "viewport " << viewport()->width() << " " << viewport()->height() << "\n";
 
     // some variables used to determine the viewport
     int nearPageNumber = -1;
@@ -4944,6 +4947,7 @@ void PageView::slotRequestVisiblePixmaps( int newValue )
             kWarning() << "rerequesting visible pixmaps for page" << i->pageNumber() << "!";
 #endif
             Okular::PixmapRequest * p = new Okular::PixmapRequest( this, i->pageNumber(), i->uncroppedWidth(), i->uncroppedHeight(), PAGEVIEW_PRIO, Okular::PixmapRequest::Asynchronous );
+			std::cout << "uncropped " << i->uncroppedWidth() << " " << i->uncroppedHeight() << "\n";
             requestedPixmaps.push_back( p );
 
             if ( i->page()->hasTilesManager( this ) )
